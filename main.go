@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
@@ -15,6 +16,17 @@ type User struct {
 	Password string `json:"password" form:"password" binding:"required"`
 }
 
+// 文章模型
+type Post struct {
+	ID         int       `json:"id" gorm:"primaryKey;autoIncrement"`
+	Uploader   User      `gorm:"foreignKey:UploaderID"`
+	UploaderID int       `json:"uploaderid"`
+	UploadTime time.Time `json:"uploadtime" gorm:"autoCreateTime"`
+	Title      string    `json:"title" gorm:"type:varchar(255);not null"`
+	Content    string    `json:"content" gorm:"type:text;not null"`
+	IsOriginal bool      `json:"isoriginal" gorm:"type:boolean"`
+}
+
 func main() {
 	//mysql database
 	dsn := "root:root@tcp(127.0.0.1:3306)/share_freely?charset=utf8mb4&parseTime=True&loc=Local"
@@ -23,7 +35,7 @@ func main() {
 		panic(err)
 	}
 	//模型迁移
-	db.AutoMigrate(&User{})
+	db.AutoMigrate(&User{}, &Post{})
 
 	//route handlers
 	r := gin.Default()
@@ -77,6 +89,7 @@ func main() {
 			//c.HTML(http.StatusOK, "login.html", nil)
 		})
 		// 登录操作
+		//忘写密码错误了
 		userGroup.POST("/login", func(c *gin.Context) {
 			//form表单数据:参数绑定
 			var user User
@@ -104,6 +117,51 @@ func main() {
 
 			//重定向至主页
 
+		})
+
+	}
+
+	//home:主页模块
+	homeGroup := r.Group("/home")
+	{
+		//访问主页
+		homeGroup.GET("/main", func(c *gin.Context) {
+			//渲染模版
+
+			//获得随机文章
+			var post Post
+			result := db.Take(&post)
+			if result.Error != nil {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"code": 0,
+					"msg":  result.Error.Error(),
+				})
+				return
+			}
+			c.JSON(http.StatusOK, gin.H{
+				"code": 1,
+				"msg":  "Successfully acquired",
+				"data": post,
+			})
+		})
+
+		//点击换一篇按钮
+		homeGroup.GET("/change", func(c *gin.Context) {
+			//获得随机文章
+			var post Post
+			result := db.Take(&post)
+			if result.Error != nil {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"code": 0,
+					"msg":  result.Error.Error(),
+				})
+				return
+			}
+			c.JSON(http.StatusOK, gin.H{
+				"code": 1,
+				"msg":  "Successfully acquired",
+				"data": post,
+			})
 		})
 
 	}
