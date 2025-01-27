@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -11,7 +12,7 @@ import (
 
 // 用户模型
 type User struct {
-	ID       int    `json:"id" form:"id"` //注册时由数据库指定：自增
+	ID       int    `json:"id" form:"id" gorm:"autoIncrement"` //注册时由数据库指定：自增
 	Username string `json:"username" form:"username" binding:"required"`
 	Password string `json:"password" form:"password" binding:"required"`
 }
@@ -22,9 +23,9 @@ type Post struct {
 	Uploader   User      `gorm:"foreignKey:UploaderID"`
 	UploaderID int       `json:"uploaderid"`
 	UploadTime time.Time `json:"uploadtime" gorm:"autoCreateTime"`
-	Title      string    `json:"title" gorm:"type:varchar(255);not null"`
-	Content    string    `json:"content" gorm:"type:text;not null"`
-	IsOriginal bool      `json:"isoriginal" gorm:"type:boolean"`
+	Title      string    `json:"title" gorm:"type:varchar(255);not null" binding:"required"`
+	Content    string    `json:"content" gorm:"type:text;not null" binding:"required"`
+	IsOriginal bool      `json:"isoriginal" gorm:"type:boolean" binding:"required"`
 }
 
 func main() {
@@ -36,6 +37,8 @@ func main() {
 	}
 	//模型迁移
 	db.AutoMigrate(&User{}, &Post{})
+
+	var currentUser User //记录当前登录的用户
 
 	//route handlers
 	r := gin.Default()
@@ -89,7 +92,7 @@ func main() {
 			//c.HTML(http.StatusOK, "login.html", nil)
 		})
 		// 登录操作
-		//忘写密码错误了
+		//忘写密码错误场景了
 		userGroup.POST("/login", func(c *gin.Context) {
 			//form表单数据:参数绑定
 			var user User
@@ -110,6 +113,7 @@ func main() {
 				return
 			}
 			//存在，登录成功
+			currentUser = user
 			c.JSON(http.StatusOK, gin.H{
 				"code": 1,
 				"msg":  "Login successfully, welcome",
@@ -164,6 +168,71 @@ func main() {
 			})
 		})
 
+	}
+
+	//功能模块-上传，查看我的上传
+	funcGroup := r.Group("/func")
+	{
+		//点击上传按钮
+		// 使用querystring发送username
+		funcGroup.GET("/func/upload", func(c *gin.Context) {
+			// 跳转至上传界面
+			// c.HTML(http.StatusOK, "upload.html", nil)
+			// username := c.Query("username")
+			c.JSON(http.StatusOK, gin.H{ //响应
+				"code": 1,
+				"msg":  "username:" + currentUser.Username,
+			})
+
+			// 确认上传
+			funcGroup.POST("/func/upload", func(c *gin.Context) {
+				// form表单提交内容：Title Content IsOriginal
+				// shouldbind,利用binding:"required"机制判断前端填写内容是否完整
+				var post Post
+				if err := c.ShouldBind(&post); err != nil {
+					c.JSON(http.StatusBadRequest, gin.H{
+						"code": 2,
+						"msg":  err.Error(),
+					})
+					return
+				}
+				//上传内容完整，补全上传者信息
+				post.Uploader = currentUser
+
+				//写入数据库
+				result := db.Create(&post)
+				if result.Error != nil { //Fail
+					c.JSON(http.StatusBadRequest, gin.H{
+						"code": 0,
+						"msg":  result.Error.Error(),
+					})
+					return
+				}
+				//写入成功
+				c.JSON(http.StatusOK, gin.H{
+					"code": 1,
+					"msg":  "Successfully upload",
+				})
+			})
+		})
+		//查看我的上传
+		funcGroup.GET("/func/myuploads", func(c *gin.Context) {
+			var posts []Post
+			result := db.Where("UploaderID + ?", currentUser.ID).Find(&posts)
+			if result.Error != nil {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"code": 0,
+					"msg":  "Failed to search",
+					"data": nil,
+				})
+				return
+			}
+			c.JSON(http.StatusOK, gin.H{
+				"code": 1,
+				"msg":  strconv.Itoa(int(result.RowsAffected)) + "uploads in total",
+				"data": posts,
+			})
+		})
 	}
 
 	r.Run()
