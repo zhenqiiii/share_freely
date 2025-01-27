@@ -19,13 +19,13 @@ type User struct {
 
 // 文章模型
 type Post struct {
-	ID         int       `json:"id" gorm:"primaryKey;autoIncrement"`
-	Uploader   User      `gorm:"foreignKey:UploaderID"`
+	ID int `json:"id" gorm:"primaryKey;autoIncrement"`
+	// Uploader   User      `gorm:"foreignKey:UploaderID"`
 	UploaderID int       `json:"uploaderid"`
 	UploadTime time.Time `json:"uploadtime" gorm:"autoCreateTime"`
-	Title      string    `json:"title" gorm:"type:varchar(255);not null" binding:"required"`
-	Content    string    `json:"content" gorm:"type:text;not null" binding:"required"`
-	IsOriginal bool      `json:"isoriginal" gorm:"type:boolean" binding:"required"`
+	Title      string    `json:"title" form:"title" gorm:"type:varchar(255);not null" binding:"required"`
+	Content    string    `json:"content" form:"content" gorm:"type:text;not null" binding:"required"`
+	IsOriginal bool      `json:"isoriginal" form:"isoriginal" gorm:"type:boolean" binding:"required"`
 }
 
 func main() {
@@ -175,7 +175,7 @@ func main() {
 	{
 		//点击上传按钮
 		// 使用querystring发送username
-		funcGroup.GET("/func/upload", func(c *gin.Context) {
+		funcGroup.GET("/upload", func(c *gin.Context) {
 			// 跳转至上传界面
 			// c.HTML(http.StatusOK, "upload.html", nil)
 			// username := c.Query("username")
@@ -183,42 +183,41 @@ func main() {
 				"code": 1,
 				"msg":  "username:" + currentUser.Username,
 			})
-
-			// 确认上传
-			funcGroup.POST("/func/upload", func(c *gin.Context) {
-				// form表单提交内容：Title Content IsOriginal
-				// shouldbind,利用binding:"required"机制判断前端填写内容是否完整
-				var post Post
-				if err := c.ShouldBind(&post); err != nil {
-					c.JSON(http.StatusBadRequest, gin.H{
-						"code": 2,
-						"msg":  err.Error(),
-					})
-					return
-				}
-				//上传内容完整，补全上传者信息
-				post.Uploader = currentUser
-
-				//写入数据库
-				result := db.Create(&post)
-				if result.Error != nil { //Fail
-					c.JSON(http.StatusBadRequest, gin.H{
-						"code": 0,
-						"msg":  result.Error.Error(),
-					})
-					return
-				}
-				//写入成功
-				c.JSON(http.StatusOK, gin.H{
-					"code": 1,
-					"msg":  "Successfully upload",
+		})
+		// 确认上传
+		funcGroup.POST("/upload", func(c *gin.Context) {
+			// form表单提交内容：Title Content IsOriginal
+			// shouldbind,利用binding:"required"机制判断前端填写内容是否完整
+			var post Post
+			if err := c.ShouldBind(&post); err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"code": 2,
+					"msg":  err.Error(),
 				})
+				return
+			}
+			//上传内容完整，补全上传者信息
+			post.UploaderID = currentUser.ID
+
+			//写入数据库
+			result := db.Create(&post)
+			if result.Error != nil { //Fail
+				c.JSON(http.StatusBadRequest, gin.H{
+					"code": 0,
+					"msg":  result.Error.Error(),
+				})
+				return
+			}
+			//写入成功
+			c.JSON(http.StatusOK, gin.H{
+				"code": 1,
+				"msg":  "Successfully upload",
 			})
 		})
 		//查看我的上传
-		funcGroup.GET("/func/myuploads", func(c *gin.Context) {
+		funcGroup.GET("/myuploads", func(c *gin.Context) {
 			var posts []Post
-			result := db.Where("UploaderID + ?", currentUser.ID).Find(&posts)
+			result := db.Where("uploader_id = ?", currentUser.ID).Find(&posts)
 			if result.Error != nil {
 				c.JSON(http.StatusBadRequest, gin.H{
 					"code": 0,
