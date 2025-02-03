@@ -26,6 +26,7 @@ type Post struct {
 	Title      string    `json:"title" form:"title" gorm:"type:varchar(255);not null" binding:"required"`
 	Content    string    `json:"content" form:"content" gorm:"type:text;not null" binding:"required"`
 	IsOriginal bool      `json:"isoriginal" form:"isoriginal" gorm:"type:boolean" binding:"required"`
+	//Q:IsOriginal这个字段，只有是前端发送过来是True的时候，shouldbind才会识别到，False就会报错说没找到该字段
 }
 
 func main() {
