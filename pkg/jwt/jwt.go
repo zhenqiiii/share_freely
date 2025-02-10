@@ -16,14 +16,16 @@ var Secret = []byte("你拿什么抗争")
 // MyClaims 自定义声明类型 内嵌jwt.RegisteredClaims
 // 加入Username字段
 type MyClaims struct {
+	UserID               int64  `json:"userid"`
 	Username             string `json:"username"`
 	jwt.RegisteredClaims        // 内嵌标准声明
 }
 
 // GenToken 生成JWT字符串
-func GenToken(username string) (string, error) {
+func GenToken(userid int64, username string) (string, error) {
 	// 创建MyClaims声明
 	claims := MyClaims{ // 复习一下结构体的定义方式
+		userid,
 		username,
 		jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(TokenExpireDuration)), //过期时间
