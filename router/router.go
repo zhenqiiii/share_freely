@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/zhenqiiii/share_freely/controller"
 	"github.com/zhenqiiii/share_freely/pkg/jwt"
 )
 
@@ -31,7 +32,7 @@ func SetupRouter(mode string) *gin.Engine {
 	homeGroup := r.Group("/home")
 	{
 		// 访问
-		homeGroup.GET("/main")
+		homeGroup.GET("/main", controller.HomeHandler())
 	}
 
 	// function
@@ -104,10 +105,10 @@ func AuthMiddleware() func(c *gin.Context) {
 			c.Abort()
 			return
 		}
-		// 将当前请求的username保存到请求的上下文c中
-		c.Set("username", claims.Username)
+		// 将当前请求的userID保存到请求的上下文c中
+		c.Set("userid", claims.UserID)
 		// 执行后面的处理函数
-		// 后续的处理函数可以用过c.Get("username")来获取当前请求的用户信息
+		// 后续的处理函数可以用过c.Get("userid")来获取当前请求的用户ID信息
 		c.Next()
 	}
 }

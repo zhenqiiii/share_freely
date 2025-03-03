@@ -1,4 +1,4 @@
-package gorm
+package mysql
 
 import (
 	"errors"
@@ -8,6 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// =================Connection========================//
 var db *gorm.DB
 
 // 连接数据库并自动迁移模型
@@ -20,6 +21,8 @@ func ConnectToDB() (err error) {
 
 	return nil
 }
+
+// =======================User=========================//
 
 // 注册模块Register
 // 1.判断用户是否存在
@@ -51,4 +54,16 @@ func Login(user *models.User) (user2 *models.User, err error) {
 		return nil, errors.New("密码错误")
 	}
 	return user2, nil
+}
+
+// ======================function===============================//
+
+// GetRandomPost:返回随机抽取的文章
+func GetRandomPost() (RandomPost *models.Post, err error) {
+	// 从数据库中随机查询文章
+	result := db.Take(RandomPost)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return RandomPost, nil
 }
