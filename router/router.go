@@ -21,11 +21,11 @@ func SetupRouter(mode string) *gin.Engine {
 	userGroup := r.Group("/user")
 	{
 		// register
-		// 访问注册页面
-		userGroup.GET("/register")
+		// 注册
+		userGroup.POST("/register", controller.RegisterHandler())
 		// login
-		// 访问登录页面
-		userGroup.GET("/login")
+		// 登录
+		userGroup.POST("/login", controller.LoginHandler())
 	}
 
 	// home
@@ -38,14 +38,14 @@ func SetupRouter(mode string) *gin.Engine {
 	// function
 	funcGroup := r.Group("/func")
 	{
-		// 点击换一篇
-		funcGroup.GET("/change")
-		// 点击上传按钮
+		// 点击换一篇按钮
+		funcGroup.GET("/change", controller.ChangePost())
+		// 点击上传按钮,跳转页面
 		funcGroup.GET("/upload", AuthMiddleware())
 		// 确认上传
-		funcGroup.POST("/upload", AuthMiddleware())
+		funcGroup.POST("/upload", AuthMiddleware(), controller.UploadPost())
 		// 查看我的上传
-		funcGroup.GET("/myuploads", AuthMiddleware())
+		funcGroup.GET("/myuploads", AuthMiddleware(), controller.MyUploads())
 	}
 
 	// 无此路径

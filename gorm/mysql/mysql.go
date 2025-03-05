@@ -35,8 +35,8 @@ func ConnectToDB() (err error) {
 // 1.判断用户是否存在
 func CheckUserExist(username string) (err error) {
 	var user models.User
-	if result := db.Where("name = ?", username).First(&user); result.RowsAffected != 0 {
-		return errors.New("用户已存在")
+	if result := db.Where("username = ?", username).First(&user); result.RowsAffected != 0 {
+		return errors.New("user already exists")
 	}
 	return nil
 }
@@ -55,10 +55,10 @@ func InsertUser(user *models.User) (err error) {
 func Login(user *models.User) (user2 *models.User, err error) {
 	result := db.Where("username = ?", user.Username).First(&user2)
 	if result.RowsAffected == 0 {
-		return nil, errors.New("用户不存在")
+		return nil, errors.New("user not exists")
 	}
 	if user2.Password != user.Password {
-		return nil, errors.New("密码错误")
+		return nil, errors.New("wrong pwd")
 	}
 	return user2, nil
 }
