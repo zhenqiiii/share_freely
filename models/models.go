@@ -5,8 +5,8 @@ import "time"
 // 用户模型
 type User struct {
 	UID      int64  `gorm:"primaryKey"`
-	Username string `json:"username" form:"username"`
-	Password string `json:"password" form:"password"`
+	Username string `json:"username" form:"username" gorm:"type:varchar(100)"`
+	Password string `json:"password" form:"password" gorm:"type:varchar(100)"`
 }
 
 // 注册时的参数
