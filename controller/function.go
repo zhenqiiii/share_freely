@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/zhenqiiii/share_freely/logic"
+	"github.com/zhenqiiii/share_freely/models"
 )
 
 // 功能模块的控制台代码：Handler 说白了就是路由处理函数
@@ -18,6 +19,7 @@ import (
 // 返回随机文章
 func ChangePost() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		// 调用业务逻辑函数
 		post, err := logic.FuncChange()
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
@@ -27,12 +29,12 @@ func ChangePost() gin.HandlerFunc {
 			})
 			return
 		}
+		// 返回文章
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
 			"msg":  "fetch post successfully!",
 			"data": post,
 		})
-		return
 	}
 }
 
@@ -40,6 +42,34 @@ func ChangePost() gin.HandlerFunc {
 // 上传文章功能
 func UploadPost() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		// 接收参数
+		var p models.ParamUpload
+		err := c.ShouldBind(&p)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":  0,
+				"msg":   "something went wrong with the param",
+				"error": err,
+			})
+			return
+		}
+		// 获取token
+		uid, _ := c.Get("userid")
+		// 调用业务逻辑
+		err = logic.UploadPost(p, uid.(int64))
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code":  0,
+				"msg":   "something went wrong",
+				"error": err,
+			})
+			return
+		}
+		// 上传成功
+		c.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "upload successfully",
+		})
 
 	}
 }
@@ -65,7 +95,6 @@ func MyUploads() gin.HandlerFunc {
 			"msg":  strconv.Itoa(len(posts)) + "posts in total",
 			"data": posts,
 		})
-		return
 
 	}
 }

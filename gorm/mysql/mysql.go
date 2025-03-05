@@ -22,6 +22,13 @@ func ConnectToDB() (err error) {
 	return nil
 }
 
+// // 检查数据库连接（防御性编程）
+// func CheckConnection() error {
+// 	if db == nil {
+// 		return errors.New("database is not initialized")
+// 	}
+// }
+
 // =======================User=========================//
 
 // 注册模块Register
@@ -66,4 +73,24 @@ func GetRandomPost() (RandomPost *models.Post, err error) {
 		return nil, result.Error
 	}
 	return RandomPost, nil
+}
+
+// InsertPost:向数据库加入文章
+func InsertPost(post models.Post) error {
+	// nil reference:可能由于db没有初始化成功
+	result := db.Create(&post)
+	if err := result.Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+// GetMyUpload:获取我的上传
+func GetMyUpload(uid int64) (posts []models.Post, err error) {
+	// 根据uid查询,查找到的文章存入posts切片中
+	result := db.Where("uploader_id = ?", uid).Find(&posts)
+	if err = result.Error; err != nil {
+		return nil, err
+	}
+	return posts, nil
 }
