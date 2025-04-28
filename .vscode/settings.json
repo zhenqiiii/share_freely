@@ -1,0 +1,15 @@
+{
+    "editor.cursorStyle": "line",
+    // "editor.cursorBlinking": "blink" // 默认闪烁
+    // "editor.cursorBlinking": "smooth" // 平滑动画闪烁
+    // "editor.cursorBlinking": "phase" // 阶段性闪烁
+    "editor.cursorBlinking": "expand", // 扩展动画
+    "editor.cursorWidth": "2" ,
+    // "editor.cursorBlinking": "solid"  // 不闪烁
+    "workbench.colorCustomizations": {
+        // 修改光标颜色（十六进制或颜色名称）
+        "editorCursor.foreground": "#c164ecef", // 光标颜色
+        // 可选：如果光标颜色与背景对比度低，可设置背景色
+        "editorCursor.background": "#59a559"
+}
+}

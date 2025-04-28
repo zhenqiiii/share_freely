@@ -1,0 +1,119 @@
+/* 暗色模式样式 */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a1a1a;
+        color: #e5e5e5;
+    }
+
+    .glass-effect {
+        background: rgba(26, 26, 26, 0.7);
+    }
+
+    .article-card,
+    .recommendation-card {
+        background-color: #2d2d2d;
+        border-color: #404040;
+    }
+
+    .nav-link {
+        color: #e5e5e5;
+    }
+
+    .nav-link:hover {
+        color: #34D399;
+    }
+
+    .dropdown-menu {
+        background-color: #2d2d2d;
+        border-color: #404040;
+    }
+
+    .dropdown-item:hover {
+        background-color: #404040;
+    }
+
+    .text-gray-800 {
+        color: #e5e5e5;
+    }
+
+    .text-gray-600 {
+        color: #a3a3a3;
+    }
+
+    footer {
+        background-color: #2d2d2d;
+        border-color: #404040;
+    }
+}
+
+/* 响应式布局增强 */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .article-card {
+        margin-bottom: 1.5rem;
+    }
+
+    .recommendation-card {
+        margin-top: 1.5rem;
+    }
+
+    .mobile-menu {
+        display: block;
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 50;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* 交互优化 */
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* 加载动画 */
+.loading {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid #e5e5e5;
+    border-radius: 50%;
+    border-top-color: #10B981;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

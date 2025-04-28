@@ -1,0 +1,193 @@
+body{
+    background-color:silver;
+    font-family: "Noto Serif SC", cursive, serif;
+}
+
+/* 顶部标识，logo部分 */
+div.top{
+    text-align: left;
+    letter-spacing: 5px; 
+    background-color: white;
+    margin: 1px 0;
+    padding:1px 10px;
+
+}
+
+#logo{
+    color: white;
+    background-color:seagreen;
+    padding: 3px 10px;
+    border-radius: 16px;
+}
+
+#letter{
+    letter-spacing: 1px;
+    font-family: Tahoma, Verdana, Geneva, sans-serif;
+}
+
+/* 导航栏，包括其下拉菜单 */
+
+.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 0 0 0;
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+    position: sticky;
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+
+.main {
+    display: block;
+    padding: 15px 30px;
+    color: black;
+    font-size: larger;
+    font-weight: 600;
+    background-color: white;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* 导航栏选项，鼠标覆盖后变灰 */
+a.main:hover{
+    background-color:darkgray;
+}
+
+/* 当前页面为主页的标识 */
+.active{
+    background-color: darkgrey;
+}
+
+/* 选项'我的'的下拉菜单样式 */
+ul.mine{
+    list-style-type: none;
+    text-align: center;
+    display: none;
+    /* position: ; */ 
+    background-color: white;
+    min-width: 0;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 1px;
+    z-index: 1;
+}
+
+.minesub{
+    padding: 10px;
+}
+
+/* 下拉菜单链接样式 */
+.minesub a {
+    color: black;
+    text-decoration: none;
+}
+
+/* 鼠标移动到下拉菜单选项上，选项变灰 */
+.mine li:hover{
+    background-color:darkgray;
+}   
+
+/* 鼠标移动到我的，显示下拉菜单 */
+.right:hover .mine {
+    display: block;
+}
+
+.content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.article{
+    padding: 10px;
+    /* min-width: 60%; */
+    margin:5px 5px 10px 10px;
+    border-radius: 5px;
+    background-color: white;
+    border: thin solid gray;
+    text-align: center;
+}
+.article h3 {
+    border-bottom: thin solid gray;
+    margin: 10px 150px;
+}
+
+.article p{
+    margin: 100px;
+    text-align: left;
+    text-indent: 30px;
+}
+
+
+
+.recommendation{
+    background-color: white;
+    border: thin solid gray;
+    border-radius: 5px;
+    min-width: 25%;
+    padding: 10px;
+    margin: 5px 10px 10px 5px;
+}
+
+.recommendation h2{
+    text-align: center;
+    background-color:slategray;
+    margin: 0;
+    border-radius: 5px;
+    padding: 3px 0px;
+
+}
+
+.recommendlist {
+    text-align: center;
+}
+
+.recommendlist li {
+    text-align: center;
+    list-style-type: none;
+    border-bottom: thin solid rgb(210, 207, 207);
+    padding: 30px;
+}
+
+.recommendlist li a {
+    text-align: center;
+    text-decoration: none;
+    color:rgb(61, 61, 61);
+    background-color: white;
+    border-radius: 3px;
+}
+
+.recommendlist li a:hover{
+    background-color: darkgrey;
+}
+
+
+
+
+/* footer部分 */
+
+.bottomnav{
+    right: 5px;
+    background-color:rgb(61, 61, 61);
+    list-style-type: none;
+    text-align: center;
+    margin: 0;
+    padding: 40px;
+}
+.bottomnav li{
+    display: inline-block;
+    width: 100px;
+    height: 50px;
+    
+}
+.bottomnav li a{
+    color: white;
+}
+.bottomnav li a:hover{
+    color:lightgreen;
+}

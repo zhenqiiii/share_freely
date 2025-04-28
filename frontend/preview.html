@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随share - 页面预览</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding: 2rem;
+        }
+        .preview-frame {
+            width: 390px;
+            height: 844px;
+            border: 12px solid #1a1a1a;
+            border-radius: 48px;
+            overflow: hidden;
+            position: relative;
+        }
+        .preview-frame::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 24px;
+            background: #1a1a1a;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 1;
+        }
+        .preview-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .preview-label {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: #374151;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">随share - 页面预览</h1>
+        <div class="preview-container">
+            <!-- 主页预览 -->
+            <div class="preview-item">
+                <div class="preview-frame shadow-xl">
+                    <iframe src="index.html" title="主页"></iframe>
+                </div>
+                <div class="preview-label">主页</div>
+            </div>
+            
+            <!-- 文章上传页预览 -->
+            <div class="preview-item">
+                <div class="preview-frame shadow-xl">
+                    <iframe src="upload.html" title="文章上传"></iframe>
+                </div>
+                <div class="preview-label">文章上传</div>
+            </div>
+            
+            <!-- 个人资料页预览 -->
+            <div class="preview-item">
+                <div class="preview-frame shadow-xl">
+                    <iframe src="profile.html" title="个人资料"></iframe>
+                </div>
+                <div class="preview-label">个人资料</div>
+            </div>
+            
+            <!-- 收藏夹页预览 -->
+            <div class="preview-item">
+                <div class="preview-frame shadow-xl">
+                    <iframe src="favorites.html" title="收藏夹"></iframe>
+                </div>
+                <div class="preview-label">收藏夹</div>
+            </div>
+            
+            <!-- 上传管理页预览 -->
+            <div class="preview-item">
+                <div class="preview-frame shadow-xl">
+                    <iframe src="manage.html" title="上传管理"></iframe>
+                </div>
+                <div class="preview-label">上传管理</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

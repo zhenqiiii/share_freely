@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随share - 分享生活点滴</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #f3f4f6;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .article-card {
+            transition: transform 0.3s ease;
+        }
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #10B981;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- 导航栏 -->
+    <nav class="glass-effect fixed w-full z-50 top-0 shadow-sm">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <span class="bg-green-600 text-white px-3 py-1 rounded-lg text-xl font-bold">随share</span>
+                    <span class="text-gray-600 text-lg">随意分享</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="nav-link text-gray-700 font-medium">主页</a>
+                    <a href="#" class="nav-link text-gray-700 font-medium">收藏</a>
+                    <a href="#" class="nav-link text-gray-700 font-medium">上传</a>
+                    <div class="relative group">
+                        <a href="#" class="nav-link text-gray-700 font-medium">我的</a>
+                        <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl hidden group-hover:block">
+                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">用户资料</a>
+                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">我的上传</a>
+                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">退出登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区 -->
+    <main class="container mx-auto px-4 pt-24 pb-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- 文章展示区 -->
+            <div class="lg:w-3/4">
+                <article class="bg-white rounded-xl shadow-md overflow-hidden article-card">
+                    <div class="p-6">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">麦子熟了五千次，人民万岁第一回</h2>
+                        <div class="prose max-w-none text-gray-600 leading-relaxed">
+                            <p class="indent-8 mb-4">五千次的麦子熟了，每一粒麦穗都见证了岁月的变迁，见证了一个又一个轮回。从我记事起，家乡的田野就总是绿意盎然，金黄的麦浪是每年最温暖的记号。而今，那片广袤的麦田，依旧是我的记忆里最鲜活的部分。</p>
+                            <p class="indent-8 mb-4">小时候，我常和村里的伙伴们在田野里奔跑。麦田是我们的天堂，是那个夏天永远停不下来的旋律。麦子从嫩绿变成金黄，风一吹，麦穗低垂，似乎在低声诉说着什么。</p>
+                        </div>
+                        <div class="flex justify-center mt-6 space-x-4">
+                            <button class="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors">
+                                <i class="fas fa-heart"></i>
+                                <span>收藏</span>
+                            </button>
+                            <button class="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors">
+                                <i class="fas fa-share"></i>
+                                <span>分享</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- 推荐阅读区 -->
+            <div class="lg:w-1/4">
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">推荐阅读</h3>
+                    <div class="space-y-4">
+                        <a href="#" class="block p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                            <h4 class="text-lg font-medium text-gray-800">三体</h4>
+                            <p class="text-sm text-gray-600 mt-1">刘慈欣的科幻巨著</p>
+                        </a>
+                        <a href="#" class="block p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                            <h4 class="text-lg font-medium text-gray-800">环太平洋</h4>
+                            <p class="text-sm text-gray-600 mt-1">机甲与怪兽的史诗对决</p>
+                        </a>
+                        <a href="#" class="block p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                            <h4 class="text-lg font-medium text-gray-800">C Prime Plus</h4>
+                            <p class="text-sm text-gray-600 mt-1">C语言程序设计经典教程</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部导航 -->
+    <footer class="bg-white shadow-md mt-12">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-center space-x-8">
+                <a href="https://github.com/zhenqiiii/share_freely" target="_blank" class="text-gray-600 hover:text-gray-900 transition-colors">
+                    <i class="fab fa-github mr-2"></i>GitHub
+                </a>
+                <a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">首页</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">组织</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 移动端菜单按钮 -->
+    <button class="md:hidden fixed right-4 bottom-4 bg-green-600 text-white p-4 rounded-full shadow-lg">
+        <i class="fas fa-bars"></i>
+    </button>
+</body>
+</html>
