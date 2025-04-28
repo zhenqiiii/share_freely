@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随share - 我的收藏</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #f3f4f6;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #10B981;
+        }
+        .favorite-card {
+            transition: all 0.3s ease;
+        }
+        .favorite-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- 导航栏 -->
+    <nav class="glass-effect fixed w-full z-50 top-0 shadow-sm">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <span class="bg-green-600 text-white px-3 py-1 rounded-lg text-xl font-bold">随share</span>
+                    <span class="text-gray-600 text-lg">随意分享</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 font-medium">主页</a>
+                    <a href="favorites.html" class="nav-link text-gray-700 font-medium">收藏</a>
+                    <a href="upload.html" class="nav-link text-gray-700 font-medium">上传</a>
+                    <div class="relative group">
+                        <a href="#" class="nav-link text-gray-700 font-medium">我的</a>
+                        <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl hidden group-hover:block">
+                            <a href="profile.html" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">用户资料</a>
+                            <a href="manage.html" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">我的上传</a>
+                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">退出登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区 -->
+    <main class="container mx-auto px-4 pt-24 pb-12">
+        <!-- 收藏夹标题和筛选 -->
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-800">我的收藏</h1>
+            <div class="flex items-center space-x-4">
+                <select class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    <option value="all">全部分类</option>
+                    <option value="life">生活随笔</option>
+                    <option value="tech">技术分享</option>
+                    <option value="reading">读书笔记</option>
+                </select>
+                <select class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    <option value="newest">最新收藏</option>
+                    <option value="oldest">最早收藏</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 收藏内容网格 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 收藏卡片 1 -->
+            <div class="favorite-card bg-white rounded-xl shadow-md overflow-hidden">
+                <img src="https://source.unsplash.com/random/800x400?reading" alt="文章封面" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">读书笔记</span>
+                        <button class="text-red-500 hover:text-red-600">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">三体：黑暗森林</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-2">在黑暗森林法则的笼罩下，人类文明该如何选择自己的生存之路？</p>
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <span>收藏于 2024-01-15</span>
+                        <a href="#" class="text-green-600 hover:text-green-700">查看全文</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 收藏卡片 2 -->
+            <div class="favorite-card bg-white rounded-xl shadow-md overflow-hidden">
+                <img src="https://source.unsplash.com/random/800x400?technology" alt="文章封面" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">技术分享</span>
+                        <button class="text-red-500 hover:text-red-600">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">深入理解Go语言并发</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-2">探索Go语言的并发特性，从goroutine到channel的详细解析。</p>
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <span>收藏于 2024-01-14</span>
+                        <a href="#" class="text-green-600 hover:text-green-700">查看全文</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 收藏卡片 3 -->
+            <div class="favorite-card bg-white rounded-xl shadow-md overflow-hidden">
+                <img src="https://source.unsplash.com/random/800x400?life" alt="文章封面" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">生活随笔</span>
+                        <button class="text-red-500 hover:text-red-600">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">春日漫步</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-2">春天来了，带着相机去公园捕捉春天的气息。</p>
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <span>收藏于 2024-01-13</span>
+                        <a href="#" class="text-green-600 hover:text-green-700">查看全文</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分页 -->
+        <div class="flex justify-center mt-8">
+            <nav class="flex items-center space-x-2">
+                <a href="#" class="px-3 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <a href="#" class="px-4 py-2 rounded-lg border border-green-600 bg-green-600 text-white">1</a>
+                <a href="#" class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50">2</a>
+                <a href="#" class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50">3</a>
+                <a href="#" class="px-3 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </nav>
+        </div>
+    </main>
+
+    <!-- 底部导航 -->
+    <footer class="bg-white shadow-md mt-12">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-center space-x-8">
+                <a href="https://github.com/zhenqiiii/share_freely" target="_blank" class="text-gray-600 hover:text-gray-900 transition-colors">
+                    <i class="fab fa-github mr-2"></i>GitHub
+                </a>
+                <a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">首页</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">组织</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 移动端菜单按钮 -->
+    <button class="md:hidden fixed right-4 bottom-4 bg-green-600 text-white p-4 rounded-full shadow-lg">
+        <i class="fas fa-bars"></i>
+    </button>
+</body>
+</html>
